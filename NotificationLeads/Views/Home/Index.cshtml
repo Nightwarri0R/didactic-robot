@@ -1,0 +1,116 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@{
+    ViewBag.Title = "Notitfication";
+}
+@model NotificationLeads.Models.NotificationsCheck;
+
+
+
+<div class="">
+    <h3>Notifications</h3>
+</div>
+@using (Html.BeginForm())
+{
+    <div>
+        <div class="row">
+            <div class="form-control">
+                <h4>Email notifications</h4>
+                <h5> Email address: </h5>
+                @Html.TextBoxFor(m => m.EmailAddress);
+                @Html.ValidationMessageFor(m => m.EmailAddress, " ", new
+                {
+                @class = " text-danger"
+
+           })
+                <p class="clearfix">
+                    This will also modify the lead contact e-mail address on the "Main details" page. This e-mail address will be shown to movers on our quote results page.
+                </p>
+                <h5> Receive leads by email:</h5>
+
+
+
+                <input type="radio" id=" personalLeadNotify" name="lead" />
+                <label>Lead with full personal data</label>
+                <br />
+
+
+                <input type="radio" id=" leadNotify" name="lead" />
+                <label>Notification of lead</label>
+                <br />
+
+                <input type="radio" id=" noNotify" title="No notifications" name="lead" />
+                <label>No notifications</label>
+                <br />
+
+                @foreach (var lead in Model.LeadNotifications)
+                {
+                    <input type="radio" asp-for="LeadNotification" value="@lead" id="@("LeadNotification"+lead)" />@lead<br />
+                   
+                }
+
+
+
+                <div class="form-control">
+
+                    <h4>Text message notifications</h4>
+
+                    <label>Send leads to mobile:</label>
+                    <input type="radio" id="mobileYes" value="Yes" name="phoneNumber" />
+                    <label>Yes</label>
+                    <input type="radio" id="mobileNo" value="No" name="phoneNumber" />
+                    <label>No</label>
+                    <p> You will be charged 0 pence for this service</p>
+                    <br />
+
+                    <label>Mobile number:</label>
+                    <input type="text" id="phoneNum" placeholder="07474676797" />
+                    <p>Please enter your phone number wihtout spaces</p>
+
+                    @foreach (var phone in Model.PhoneChecks)
+                    {
+                        <input type="radio" asp-for="PhoneCheck" value="@phone" />@phone<br />
+
+
+                        if (phone.Contains("Yes"))
+                        {
+
+                        }
+
+                    }
+
+
+                    @Html.RadioButtonFor(m=> m.PhoneCheck, "Yes")
+                    @Html.RadioButtonFor(m=> m.PhoneCheck, " No")
+
+                  
+
+
+                    <div class=" row">
+
+                        <div class="webhook1">
+                            <h4>Webhook V1</h4>
+
+                            <label>Send leads to Webhook URL:</label>
+                            <input type="checkbox" id="webhookV1Yes" value="Yes" checked name="webhook" />
+                            <label>Yes</label>
+                            <input type="checkbox" id="webhookV1no" value="No" name="webhook" />
+                            <label>No</label>
+                            <br />
+
+                            <label>Push URl:</label>
+                            <input type="text" id="webhookUrlV1" />
+                        </div>
+                    </div>
+                    <div class="">
+                        <button class="bg-success" onclick="loadJsonData()">Update details</button>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+}
